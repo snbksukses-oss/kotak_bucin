@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hello Kitty 3D Surprise 💗</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600;700&display=swap');
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:radial-gradient(circle,#fffaff,#ffe1ef,#f4b6d2);
+    color:#a43c70;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+button{
+    font-family:inherit;
+    cursor:pointer;
+}
+
+/* HALAMAN AWAL */
+
+#intro{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:20px;
+}
+
+h1{
+    font-family:'Pacifico',cursive;
+    color:#d52e7b;
+    font-size:clamp(27px,5vw,43px);
+}
+
+.subtitle{
+    font-size:13px;
+    margin:8px 0;
+}
+
+#scene{
+    width:100%;
+    max-width:750px;
+    height:430px;
+    position:relative;
+}
+
+#scene canvas{
+    display:block;
+    width:100%;
+    height:100%;
+    cursor:grab;
+    touch-action:none;
+}
+
+#scene canvas:active{
+    cursor:grabbing;
+}
+
+.main-btn{
+    border:0;
+    border-radius:30px;
+    background:linear-gradient(135deg,#fa65a8,#d32979);
+    color:white;
+    padding:14px 30px;
+    font-weight:600;
+    box-shadow:0 7px 22px #c83d7c55;
+    transition:.3s;
+}
+
+.main-btn:hover{
+    transform:scale(1.06);
+}
+
+.hint{
+    font-size:11px;
+    margin-top:12px;
+    line-height:2;
+}
+
+.control-info{
+    font-size:10px;
+    color:#a65b7e;
+    margin-top:5px;
+    line-height:1.8;
+}
+
+/* ALBUM */
+
+#album{
+    display:none;
+    max-width:600px;
+    min-height:100vh;
+    margin:auto;
+    padding:35px 20px;
+    text-align:center;
+    background:#fff6fa;
+    animation:appear .9s ease;
+}
+
+@keyframes appear{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+#album h2{
+    font-family:'Pacifico',cursive;
+    color:#d52e7b;
+    font-size:clamp(23px,5vw,32px);
+}
+
+.album-sub{
+    font-size:12px;
+    margin:12px 0 25px;
+}
+
+/* ENAM KOTAK FOTO */
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.photo{
+    border:3px solid white;
+    background:linear-gradient(145deg,#ffe6f1,#ffc4dc);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 4px 12px #a43c7020;
+    transition:.3s;
+    color:#a43c70;
+    padding:0;
+    min-width:0;
+    width:100%;
+    text-align:center;
+}
+
+.photo:hover{
+    transform:translateY(-5px) scale(1.04);
+    box-shadow:0 9px 20px #d52e7b35;
+}
+
+.heart-cover{
+    width:100%;
+    height:145px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:65px;
+    background:radial-gradient(circle,#fff7fb,#ffd5e7,#ffbdd8);
+    color:#e52f83;
+    text-shadow:0 5px 12px #c42b7040;
+    user-select:none;
+    overflow:hidden;
+}
+
+.heart-cover img{
+    display:none;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.photo.revealed .heart-cover{
+    font-size:0;
+    text-shadow:none;
+}
+
+.photo.revealed .heart-cover img{
+    display:block;
+    animation:appear .6s ease;
+}
+
+.photo span{
+    display:block;
+    padding:8px 7px;
+    font-size:11px;
+    font-weight:600;
+    line-height:1.7;
+    background:#fff8fb;
+}
+
+.photo span strong{
+    display:block;
+    color:#d52e7b;
+    font-size:12px;
+    margin-bottom:3px;
+}
+
+/* KATA-KATA ROMANTIS */
+
+.love-message{
+    margin:18px auto 0;
+    padding:16px 18px;
+    max-width:500px;
+    border:2px solid #ffd0e3;
+    border-radius:16px;
+    background:linear-gradient(145deg,#fffafd,#ffe8f2);
+    box-shadow:0 5px 16px #d52e7b18;
+    color:#a43c70;
+    animation:appear .5s ease;
+}
+
+.love-message-title{
+    font-family:'Pacifico',cursive;
+    color:#d52e7b;
+    font-size:18px;
+    margin-bottom:7px;
+}
+
+#loveMessageText{
+    font-size:13px;
+    line-height:1.9;
+}
+
+.photo.selected{
+    border-color:#ed6fa8;
+    box-shadow:0 0 0 3px #ffc3dc,0 8px 20px #d52e7b30;
+}
+
+.heart-btn{
+    margin-top:20px;
+    border:0;
+    background:linear-gradient(135deg,#fa65a8,#d32979);
+    color:white;
+    padding:13px 23px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.footer{
+    margin-top:25px;
+    font-family:'Pacifico',cursive;
+    color:#d52e7b;
+}
+
+/* HUJAN HATI */
+
+.rain{
+    position:fixed;
+    top:-40px;
+    z-index:150;
+    pointer-events:none;
+    animation:rain 4s linear forwards;
+}
+
+@keyframes rain{
+    to{
+        transform:translateY(110vh) rotate(600deg);
+        opacity:0;
+    }
+}
+
+/* HP */
+
+@media(max-width:480px){
+
+    #scene{
+        height:350px;
+    }
+
+    #album{
+        padding:25px 12px;
+    }
+
+    .gallery{
+        gap:8px;
+    }
+
+    .heart-cover{
+        height:105px;
+        font-size:48px;
+    }
+
+    .photo span{
+        font-size:10px;
+        padding:7px 4px;
+    }
+
+    .photo span strong{
+        font-size:11px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HALAMAN HADIAH -->
+
+<section id="intro">
+
+    <h1>My Special Princess 💗</h1>
+
+    <p class="subtitle">
+        A little surprise made with lots of love ♡
+    </p>
+
+    <div id="scene"></div>
+
+    <button class="main-btn" id="openBtn">
+        🎁 Buka Hadiah
+    </button>
+
+    <p class="hint">
+        Sentuh tombol untuk membuka kejutanmu ♡
+    </p>
+
+    <p class="control-info">
+        🖱️ Geser untuk memutar 3D · Scroll untuk zoom
+        <br>
+        📱 HP: Satu jari untuk memutar, dua jari untuk zoom
+    </p>
+
+</section>
+
+
+<!-- HALAMAN ALBUM -->
+
+<section id="album">
+
+    <h2>Porque te mereces todo lo bonito ♡</h2>
+
+    <p class="album-sub">
+        Sentuh Setiap Hati Untuk Menemukan Kejutan Spesial ✨
+    </p>
+
+    <!-- ENAM KOTAK FOTO -->
+
+    <div class="gallery">
+
+        <button class="photo" type="button"
+        data-title="Our Memories 🌸"
+        data-message="Senyummu adalah alasan sederhana mengapa hariku selalu terasa indah."
+        onclick="revealPhoto(this)">
+
+            <div class="heart-cover">
+                💗
+                <img src="foto/foto1.jpg" alt="Kenangan pertama">
+            </div>
+
+            <span><strong>Our Memories 🌸</strong></span>
+        </button>
+
+
+        <button class="photo" type="button"
+        data-title="Beautiful Star ⭐"
+        data-message="Dari sekian banyak orang, hatiku selalu punya alasan untuk memilihmu."
+        onclick="revealPhoto(this)">
+
+            <div class="heart-cover">
+                🎀
+                <img src="foto/foto2.jpg" alt="Kenangan kedua">
+            </div>
+
+            <span><strong>Beautiful Star ⭐</strong></span>
+        </button>
+
+
+        <button class="photo" type="button"
+        data-title="My Princess 👑"
+        data-message="Kamu tidak harus sempurna, karena bagiku kamu sudah begitu istimewa."
+        onclick="revealPhoto(this)">
+
+            <div class="heart-cover">
+                🌸
+                <img src="foto/foto3.jpg" alt="Kenangan ketiga">
+            </div>
+
+            <span><strong>My Princess 👑</strong></span>
+        </button>
+
+
+        <button class="photo" type="button"
+        data-title="Sweet Flower 🌷"
+        data-message="Semoga aku selalu menjadi salah satu alasan di balik senyum manismu."
+        onclick="revealPhoto(this)">
+
+            <div class="heart-cover">
+                💘
+                <img src="foto/foto4.jpg" alt="Kenangan keempat">
+            </div>
+
+            <span><strong>Sweet Flower 🌷</strong></span>
+        </button>
+
+
+        <button class="photo" type="button"
+        data-title="Little Teddy 🧸"
+        data-message="Jika waktu bisa kuulang, aku tetap ingin bertemu dan mengenalmu lagi."
+        onclick="revealPhoto(this)">
+
+            <div class="heart-cover">
+                💕
+                <img src="foto/foto5.jpg" alt="Kenangan kelima">
+            </div>
+
+            <span><strong>Little Teddy 🧸</strong></span>
+        </button>
+
+
+        <button class="photo" type="button"
+        data-title="All My Love 💖"
+        data-message="Aku tidak mencari yang sempurna, aku hanya ingin terus saling menjaga denganmu."
+        onclick="revealPhoto(this)">
+
+            <div class="heart-cover">
+                💖
+                <img src="foto/foto6.jpg" alt="Kenangan keenam">
+            </div>
+
+            <span><strong>All My Love 💖</strong></span>
+        </button>
+
+    </div>
+
+
+    <!-- KATA-KATA MUNCUL DI BAWAH ENAM KOTAK -->
+
+    <div id="loveMessage" class="love-message" aria-live="polite">
+
+        <div class="love-message-title">
+            💌 Pesan kecil untukmu
+        </div>
+
+        <p id="loveMessageText">
+            Pilih salah satu kotak hati di atas untuk membaca pesan spesial dariku 💗
+        </p>
+
+    </div>
+
+
+    <!-- TOMBOL HUJAN HATI -->
+
+    <button class="heart-btn" onclick="heartRain()">
+        💗 Enviar Lluvia de Corazones ✨
+    </button>
+
+
+    <div class="footer">
+        Made with love, just for you 💗
+    </div>
+
+</section>
+
+
+<!-- THREE JS -->
+
+<script type="importmap">
+{
+    "imports":{
+        "three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+        "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+    }
+}
+</script>
+
+
+<script type="module">
+
+import * as THREE from 'three';
+
+import { OrbitControls } from
+'three/addons/controls/OrbitControls.js';
+
+
+/* SCENE */
+
+const container = document.getElementById('scene');
+
+const scene = new THREE.Scene();
+
+scene.background = new THREE.Color('#ffe8f2');
+
+
+/* KAMERA */
+
+const camera = new THREE.PerspectiveCamera(
+    38,
+    container.clientWidth / container.clientHeight,
+    0.1,
+    100
+);
+
+camera.position.set(5,4.2,7);
+
+
+/* RENDERER */
+
+const renderer = new THREE.WebGLRenderer({
+    antialias:true
+});
+
+renderer.setSize(
+    container.clientWidth,
+    container.clientHeight
+);
+
+renderer.setPixelRatio(
+    Math.min(window.devicePixelRatio,2)
+);
+
+renderer.shadowMap.enabled = true;
+
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+container.appendChild(renderer.domElement);
+
+
+/* KONTROL 3D */
+
+const controls = new OrbitControls(
+    camera,
+    renderer.domElement
+);
+
+controls.enableRotate = true;
+controls.enablePan = true;
+controls.enableZoom = true;
+
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+
+controls.rotateSpeed = 0.8;
+controls.panSpeed = 0.8;
+controls.zoomSpeed = 1;
+
+controls.minDistance = 3.5;
+controls.maxDistance = 13;
+
+controls.target.set(0,1,0);
+
+controls.minPolarAngle = 0.15;
+controls.maxPolarAngle = Math.PI - 0.15;
+
+controls.update();
+
+
+/* MATERIAL */
+
+function mat(color,metalness=0,roughness=0.4){
+
+    return new THREE.MeshStandardMaterial({
+        color,
+        metalness,
+        roughness
+    });
+
+}
+
+const pink = mat('#f28bb8');
+const lightPink = mat('#ffbed8');
+const darkPink = mat('#d52d79');
+const white = mat('#fffafa');
+const black = mat('#25202a');
+const gold = mat('#ffd35c',0.6,0.25);
+
+
+/* CAHAYA */
+
+scene.add(
+    new THREE.HemisphereLight(
+        0xffffff,
+        0xf2a0c5,
+        2
+    )
+);
+
+const sun = new THREE.DirectionalLight(
+    0xffffff,
+    3
+);
+
+sun.position.set(5,8,6);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048,2048);
+
+scene.add(sun);
+
+const fill = new THREE.PointLight(
+    0xffb0d3,
+    25,
+    15
+);
+
+fill.position.set(-4,3,4);
+
+scene.add(fill);
+
+
+/* HELPER BOX */
+
+function box(parent,w,h,d,material,x,y,z){
+
+    const obj = new THREE.Mesh(
+        new THREE.BoxGeometry(w,h,d),
+        material
+    );
+
+    obj.position.set(x,y,z);
+
+    obj.castShadow = true;
+    obj.receiveShadow = true;
+
+    parent.add(obj);
+
+    return obj;
+
+}
+
+
+/* HELPER BOLA */
+
+function sphere(parent,x,y,z,sx,sy,sz,material){
+
+    const obj = new THREE.Mesh(
+        new THREE.SphereGeometry(1,32,24),
+        material
+    );
+
+    obj.position.set(x,y,z);
+
+    obj.scale.set(sx,sy,sz);
+
+    obj.castShadow = true;
+
+    parent.add(obj);
+
+    return obj;
+
+}
+
+
+/* LANTAI */
+
+const ground = new THREE.Mesh(
+    new THREE.CircleGeometry(8,80),
+    mat('#ffe3ef',0,0.9)
+);
+
+ground.rotation.x = -Math.PI/2;
+
+ground.position.y = -0.04;
+
+ground.receiveShadow = true;
+
+scene.add(ground);
+
+
+/* GROUP KOTAK */
+
+const gift = new THREE.Group();
+
+scene.add(gift);
+
+gift.position.set(0,0,0);
+
+
+/* DASAR DAN DINDING KOTAK */
+
+box(gift,3.5,.18,2.7,pink,0,.1,0);
+
+box(gift,3.5,1.65,.16,lightPink,0,.92,1.27);
+
+box(gift,3.5,1.65,.16,pink,0,.92,-1.27);
+
+box(gift,.16,1.65,2.5,pink,-1.67,.92,0);
+
+box(gift,.16,1.65,2.5,pink,1.67,.92,0);
+
+box(gift,3.35,.035,2.5,darkPink,0,.2,0);
+
+
+/* PITA DEPAN */
+
+box(gift,.38,1.6,.035,darkPink,0,.92,1.36);
+
+box(gift,3.48,.2,.04,darkPink,0,.95,1.37);
+
+
+/* BALON */
+
+function createBalloon(x,y,z,color,size){
+
+    const balloon = new THREE.Group();
+
+    gift.add(balloon);
+
+    sphere(
+        balloon,
+        0,0,0,
+        size*.72,size,size*.68,
+        mat(color)
+    );
+
+    const knot = new THREE.Mesh(
+        new THREE.ConeGeometry(size*.12,size*.22,12),
+        mat(color)
+    );
+
+    knot.position.y = -size;
+
+    knot.rotation.z = Math.PI;
+
+    balloon.add(knot);
+
+    const points = [
+        new THREE.Vector3(0,-size*1.05,0),
+        new THREE.Vector3(.04,-size*1.4,0),
+        new THREE.Vector3(-.03,-size*1.8,0),
+        new THREE.Vector3(0,-size*2.1,0)
+    ];
+
+    const curve = new THREE.CatmullRomCurve3(points);
+
+    const rope = new THREE.Mesh(
+        new THREE.TubeGeometry(curve,20,.009,6,false),
+        white
+    );
+
+    balloon.add(rope);
+
+    balloon.position.set(x,y,z);
+
+}
+
+createBalloon(-1.15,1.55,-.65,'#ff75ae',.38);
+createBalloon(-.55,1.8,-.85,'#ffc1dc',.32);
+createBalloon(.1,1.65,-.85,'#ed5e9e',.36);
+createBalloon(.72,1.8,-.75,'#ffd2e5',.32);
+createBalloon(1.2,1.5,-.55,'#ff8fbd',.38);
+
+
+/* HELLO KITTY 3D */
+
+const kitty = new THREE.Group();
+
+gift.add(kitty);
+
+
+/* KEPALA */
+
+sphere(kitty,0,0,0,.52,.44,.22,white);
+
+
+/* TELINGA */
+
+sphere(kitty,-.39,.34,0,.17,.25,.15,white);
+
+sphere(kitty,.39,.34,0,.17,.25,.15,white);
+
+
+/* MATA */
+
+sphere(kitty,-.18,.03,.205,.045,.075,.035,black);
+
+sphere(kitty,.18,.03,.205,.045,.075,.035,black);
+
+
+/* HIDUNG */
+
+sphere(kitty,0,-.1,.22,.06,.045,.035,gold);
+
+
+/* KUMIS */
+
+function whisker(x,y,rotation){
+
+    const line = box(
+        kitty,
+        .26,
+        .014,
+        .012,
+        black,
+        x,
+        y,
+        .19
+    );
+
+    line.rotation.z = rotation;
+
+}
+
+whisker(-.63,.06,-.12);
+whisker(-.63,-.04,.12);
+whisker(.63,.06,.12);
+whisker(.63,-.04,-.12);
+
+
+/* PITA HELLO KITTY */
+
+sphere(kitty,.42,.39,.05,.18,.13,.1,darkPink);
+
+sphere(kitty,.65,.39,.05,.16,.13,.1,darkPink);
+
+sphere(kitty,.43,.39,.14,.07,.07,.04,gold);
+
+
+/* BADAN */
+
+sphere(kitty,0,-.68,0,.3,.36,.22,white);
+
+sphere(kitty,-.23,-.91,.04,.14,.12,.14,white);
+
+sphere(kitty,.23,-.91,.04,.14,.12,.14,white);
+
+
+/* TANGAN */
+
+sphere(kitty,-.35,-.58,.02,.12,.25,.13,white);
+
+sphere(kitty,.35,-.58,.02,.12,.25,.13,white);
+
+
+/* MAHKOTA */
+
+const crown = mat('#ffd54e',.5,.25);
+
+for(let i=0;i<3;i++){
+
+    const point = new THREE.Mesh(
+        new THREE.ConeGeometry(.09,.23,5),
+        crown
+    );
+
+    point.position.set(
+        -.12+i*.12,
+        .57,
+        .02
+    );
+
+    kitty.add(point);
+
+}
+
+box(kitty,.38,.07,.1,gold,0,.47,.02);
+
+kitty.position.set(0,1.38,-.05);
+
+kitty.scale.set(.78,.78,.78);
+
+
+/* BOTOL KUTEKS */
+
+function createNailPolish(x,z,color){
+
+    const bottle = new THREE.Group();
+
+    gift.add(bottle);
+
+    const body = new THREE.Mesh(
+        new THREE.CylinderGeometry(.13,.15,.42,32),
+        new THREE.MeshPhysicalMaterial({
+            color:color,
+            roughness:.18,
+            metalness:.05,
+            transparent:true,
+            opacity:.94
+        })
+    );
+
+    body.position.y = .47;
+
+    bottle.add(body);
+
+    const cap = new THREE.Mesh(
+        new THREE.CylinderGeometry(.085,.09,.25,24),
+        darkPink
+    );
+
+    cap.position.y = .8;
+
+    bottle.add(cap);
+
+    const neck = new THREE.Mesh(
+        new THREE.CylinderGeometry(.075,.075,.08,24),
+        gold
+    );
+
+    neck.position.y = .69;
+
+    bottle.add(neck);
+
+    sphere(
+        bottle,
+        0,.48,.145,
+        .07,.07,.012,
+        white
+    );
+
+    bottle.position.set(x,.22,z);
+
+}
+
+createNailPolish(-1.05,.65,'#ff70a9');
+createNailPolish(-.65,.65,'#f4b69c');
+createNailPolish(-.25,.65,'#e84c80');
+createNailPolish(.15,.65,'#ffc1dc');
+
+
+/* PALET EYESHADOW */
+
+const palette = new THREE.Group();
+
+gift.add(palette);
+
+box(palette,1.35,.16,.85,darkPink,0,0,0);
+
+box(palette,1.27,.035,.77,lightPink,0,.1,0);
+
+const shadowColors = [
+    '#f5a4bd',
+    '#e46d9d',
+    '#f6d0a8',
+    '#b77bba',
+    '#d84e80',
+    '#ffd5e3',
+    '#b58c91',
+    '#f1a66e'
+];
+
+for(let i=0;i<8;i++){
+
+    const col = i%4;
+    const row = Math.floor(i/4);
+
+    const colorCircle = new THREE.Mesh(
+        new THREE.CylinderGeometry(.105,.105,.035,32),
+        mat(shadowColors[i],.05,.35)
+    );
+
+    colorCircle.position.set(
+        -.45+col*.3,
+        .135,
+        -.18+row*.35
+    );
+
+    palette.add(colorCircle);
+}
+
+palette.position.set(.85,.3,.45);
+
+
+/* KUAS MAKEUP */
+
+const brush = new THREE.Group();
+
+gift.add(brush);
+
+const handle = box(
+    brush,
+    .07,
+    .07,
+    .65,
+    gold,
+    0,0,0
+);
+
+handle.rotation.x = .15;
+
+const brushHead = new THREE.Mesh(
+    new THREE.CylinderGeometry(.07,.11,.23,16),
+    mat('#d9a9bd')
+);
+
+brushHead.position.z = -.39;
+
+brush.add(brushHead);
+
+brush.position.set(1.35,.32,-.1);
+
+brush.rotation.y = -.3;
+
+
+/* DEKORASI BINTANG */
+
+for(let i=0;i<7;i++){
+
+    const star = new THREE.Mesh(
+        new THREE.OctahedronGeometry(.09),
+        gold
+    );
+
+    star.position.set(
+        -1.2+Math.random()*2.4,
+        .45+Math.random()*.5,
+        -.4+Math.random()*.8
+    );
+
+    gift.add(star);
+
+}
+
+
+/* TUTUP KOTAK */
+
+const hinge = new THREE.Group();
+
+hinge.position.set(0,1.8,-1.35);
+
+gift.add(hinge);
+
+const lid = new THREE.Group();
+
+hinge.add(lid);
+
+
+/* TUTUP UTAMA */
+
+box(lid,3.7,.4,2.8,lightPink,0,.16,1.4);
+
+box(lid,3.72,.08,2.82,darkPink,0,-.06,1.4);
+
+
+/* PITA TUTUP */
+
+box(lid,.4,.04,2.7,darkPink,0,.38,1.4);
+
+box(lid,3.6,.04,.4,darkPink,0,.38,1.4);
+
+
+/* SIMPUL PITA */
+
+const bow = new THREE.Group();
+
+lid.add(bow);
+
+function loop(x,rotation){
+
+    const obj = new THREE.Mesh(
+        new THREE.TorusGeometry(.3,.09,16,40),
+        darkPink
+    );
+
+    obj.position.set(x,.58,1.4);
+
+    obj.rotation.z = rotation;
+
+    obj.scale.set(1,.7,.8);
+
+    bow.add(obj);
+
+}
+
+loop(-.27,.55);
+
+loop(.27,-.55);
+
+sphere(bow,0,.58,1.4,.15,.15,.14,gold);
+
+
+/* TULISAN DALAM TUTUP */
+
+function createInsideLabel(){
+
+    const canvas = document.createElement('canvas');
+
+    canvas.width = 1024;
+    canvas.height = 512;
+
+    const ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = '#fff0f7';
+
+    ctx.fillRect(0,0,1024,512);
+
+    ctx.strokeStyle = '#e75b99';
+
+    ctx.lineWidth = 12;
+
+    ctx.strokeRect(25,25,974,462);
+
+    ctx.fillStyle = '#e64b91';
+
+    ctx.textAlign = 'center';
+
+    ctx.font = 'bold 65px Georgia';
+
+    ctx.fillText('♡ Hello Kitty ♡',512,170);
+
+    ctx.font = '42px Georgia';
+
+    ctx.fillText('You are my special person',512,270);
+
+    ctx.font = '34px Georgia';
+
+    ctx.fillText('Made with love just for you',512,345);
+
+    ctx.font = '55px Georgia';
+
+    ctx.fillText('🎀  💗  🎀',512,420);
+
+    const texture = new THREE.CanvasTexture(canvas);
+
+    texture.colorSpace = THREE.SRGBColorSpace;
+
+    const label = new THREE.Mesh(
+        new THREE.PlaneGeometry(2.9,1.45),
+        new THREE.MeshBasicMaterial({
+            map:texture,
+            side:THREE.DoubleSide
+        })
+    );
+
+    label.rotation.x = Math.PI/2;
+
+    label.position.set(0,-.025,1.4);
+
+    lid.add(label);
+
+}
+
+createInsideLabel();
+
+
+/* CONFETTI */
+
+const confetti = [];
+
+function createConfetti(){
+
+    for(let i=0;i<100;i++){
+
+        const obj = new THREE.Mesh(
+            new THREE.BoxGeometry(.08,.08,.08),
+            mat([
+                '#ff5d9e',
+                '#ffd45c',
+                '#ffffff',
+                '#d52d79',
+                '#ffb9d6'
+            ][i%5])
+        );
+
+        obj.position.set(
+            (Math.random()-.5)*5,
+            2+Math.random()*4,
+            (Math.random()-.5)*4
+        );
+
+        obj.userData.speed = .025+Math.random()*.035;
+
+        scene.add(obj);
+
+        confetti.push(obj);
+
+    }
+
+}
+
+
+/* ANIMASI MEMBUKA HADIAH */
+
+let opening = false;
+let opened = false;
+let startTime = 0;
+
+function openGift(){
+
+    if(opening || opened)return;
+
+    opening = true;
+
+    startTime = performance.now();
+
+    controls.enabled = false;
+
+    document.getElementById('openBtn').textContent =
+        '💗 Membuka Hadiah...';
+
+    heartRain();
+
+}
+
+document.getElementById('openBtn')
+.addEventListener('click',openGift);
+
+
+/* LOOP ANIMASI */
+
+function animate(){
+
+    requestAnimationFrame(animate);
+
+    if(opening){
+
+        const progress = Math.min(
+            (performance.now()-startTime)/1900,
+            1
+        );
+
+        const ease = 1-Math.pow(1-progress,3);
+
+        hinge.rotation.x = -1.9*ease;
+
+        if(progress>=1){
+
+            opening = false;
+
+            opened = true;
+
+            createConfetti();
+
+            document.getElementById('openBtn').textContent =
+                '💗 Hadiah Terbuka!';
+
+            setTimeout(()=>{
+
+                document.getElementById('intro').style.display='none';
+
+                document.getElementById('album').style.display='block';
+
+                window.scrollTo({
+                    top:0,
+                    behavior:'smooth'
+                });
+
+            },2800);
+
+        }
+
+    }
+
+    /* CONFETTI */
+
+    confetti.forEach(obj=>{
+
+        obj.position.y -= obj.userData.speed;
+
+        obj.rotation.x += .04;
+
+        obj.rotation.z += .03;
+
+        if(obj.position.y<-.5){
+
+            obj.position.y = 4+Math.random()*3;
+
+        }
+
+    });
+
+    controls.update();
+
+    renderer.render(scene,camera);
+
+}
+
+animate();
+
+
+/* RESPONSIVE */
+
+window.addEventListener('resize',()=>{
+
+    const w = container.clientWidth;
+
+    const h = container.clientHeight;
+
+    camera.aspect = w/h;
+
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(w,h);
+
+});
+
+</script>
+
+
+<!-- JAVASCRIPT ALBUM FOTO DAN HUJAN HATI -->
+
+<script>
+
+function revealPhoto(card){
+
+    // Tampilkan atau sembunyikan foto
+    card.classList.toggle('revealed');
+
+    // Tandai kotak yang dipilih
+    document.querySelectorAll('.photo').forEach(item => {
+        item.classList.remove('selected');
+    });
+
+    card.classList.add('selected');
+
+    // Ambil judul dan kata-kata dari kotak
+    const title = card.dataset.title || 'Pesan spesial';
+
+    const message = card.dataset.message || '';
+
+    // Tampilkan pesan khusus di bawah keenam kotak
+    document.querySelector('.love-message-title').textContent =
+        '💌 ' + title;
+
+    document.getElementById('loveMessageText').textContent =
+        message;
+
+}
+
+
+/* HUJAN HATI */
+
+function heartRain(){
+
+    const symbols = [
+        '💗','💕','💖','💘','💝','🌸','🎀'
+    ];
+
+    for(let i=0;i<75;i++){
+
+        setTimeout(()=>{
+
+            const el = document.createElement('div');
+
+            el.className = 'rain';
+
+            el.textContent = symbols[
+                Math.floor(Math.random()*symbols.length)
+            ];
+
+            el.style.left = Math.random()*100+'vw';
+
+            el.style.fontSize =
+                (15+Math.random()*25)+'px';
+
+            el.style.animationDuration =
+                (2+Math.random()*3)+'s';
+
+            document.body.appendChild(el);
+
+            setTimeout(()=>el.remove(),5500);
+
+        },i*35);
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
